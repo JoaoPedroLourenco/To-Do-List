@@ -1,18 +1,22 @@
 import { useState, useEffect } from "react";
+import ListaDeAtividades from "../ListaAtividades/ListaDeAtividades";
 
 const Form = () => {
   const [nomeAtv, setNomeAtv] = useState("");
-  const [statusAtv, setStatusAtv] = useState("A realizar");
+  const [descAtv, setDescAtv] = useState("");
   const [atividades, setAtividades] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const novaAtividade = {
       nomeAtv,
-      statusAtv,
+      descAtv,
     };
 
     setAtividades((prevAtividades) => [...prevAtividades, novaAtividade]);
+
+    setNomeAtv("");
+    setDescAtv("");
   };
 
   useEffect(() => {
@@ -27,7 +31,10 @@ const Form = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={handleSubmit}
+        className="w-[500px] h-[500px] flex flex-col max-w-7xl bg-blue-200 rounded-2xl"
+      >
         <label>
           Nome da atividade
           <input
@@ -37,29 +44,17 @@ const Form = () => {
           />
         </label>
         <label>
-          Status da tarefa:
-          <select
-            value={statusAtv}
-            onChange={(e) => setStatusAtv(e.target.value)}
-          >
-            <option value="A realizar">A realizar</option>
-            <option value="Em andamento">Em andamento</option>
-            <option value="Realizado">Realizado</option>
-          </select>
+          Descrição da atividade
+          <input
+            type="text"
+            value={descAtv}
+            onChange={(e) => setDescAtv(e.target.value)}
+          />
         </label>
         <button>Confirmar</button>
       </form>
 
-      <div className="w-[300px] h-[800px] bg-blue-300 flex flex-col">
-        {atividades.length > 0
-          ? atividades.map((atv, index) => (
-              <div key={index}>
-                <p>{atv.nomeAtv}</p>
-                <p>{atv.statusAtv}</p>
-              </div>
-            ))
-          : ""}
-      </div>
+      <ListaDeAtividades atividades={atividades} />
     </>
   );
 };
