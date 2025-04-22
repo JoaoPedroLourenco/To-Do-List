@@ -1,8 +1,14 @@
-import React from "react";
+import { useRef, useState } from "react";
 
 const ListaDeAtividades = ({ atividades }) => {
+  const [checkBox, setCheckBox] = useState(false);
+
+  const marcarFeito = () => {
+    setCheckBox(!checkBox);
+  };
+
   return (
-    <div className="w-[500px] h-[500px] bg-gray-200 flex flex-col rounded-2xl">
+    <div className="w-[500px] h-full flex flex-col text-white">
       {atividades.length > 0
         ? atividades.map((atv, index) => (
             <div
@@ -10,10 +16,28 @@ const ListaDeAtividades = ({ atividades }) => {
               className="w-full max-h-[100px] overflow-hidden border-b border-black/30 flex items-center justify-between p-4"
             >
               <div className="flex items-center justify-center gap-10">
-                <input type="checkbox" />
+                <input
+                  type="checkbox"
+                  value={checkBox}
+                  onChange={marcarFeito}
+                />
                 <div>
-                  <h1 className="text-[1.2em] font-medium">{atv.nomeAtv}</h1>
-                  <p className="text-[.9em] font-medium text-black/60">
+                  <h1
+                    className="text-[1.2em] font-medium"
+                    style={{
+                      textDecoration: checkBox ? "line-through" : "",
+                      color: checkBox ? "#ffffffac" : "white",
+                    }}
+                  >
+                    {atv.nomeAtv}
+                  </h1>
+                  <p
+                    className="text-[.9em] font-medium text-white/60"
+                    style={{
+                      textDecoration: checkBox ? "line-through" : "",
+                      color: checkBox ? "#ffffffac" : "white",
+                    }}
+                  >
                     {atv.descAtv}
                   </p>
                 </div>
