@@ -7,18 +7,18 @@ const Form = () => {
   const [atividades, setAtividades] = useState([]);
   const [id, setId] = useState(0);
 
+  const novaAtividade = {
+    id,
+    nomeAtv,
+    descAtv,
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const novaAtividade = {
-      id,
-      nomeAtv,
-      descAtv,
-    };
-
     setId(id + 1);
 
-    setAtividades((prevAtividades) => [...prevAtividades, novaAtividade]);
+    setAtividades((prevAtividades) => [novaAtividade, ...prevAtividades]);
 
     setNomeAtv("");
     setDescAtv("");
@@ -61,7 +61,11 @@ const Form = () => {
         </button>
       </form>
 
-      <ListaDeAtividades atividades={atividades} />
+      <ListaDeAtividades
+        atividades={atividades}
+        setAtividades={setAtividades}
+        novaAtividade={novaAtividade}
+      />
     </>
   );
 };
